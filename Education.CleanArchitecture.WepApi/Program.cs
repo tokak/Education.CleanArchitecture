@@ -1,4 +1,12 @@
+using CleanArchitecture.Persistance.Context;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+
 var builder = WebApplication.CreateBuilder(args);
+
+string connectionString = builder.Configuration.GetConnectionString("SqlServer");
+
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer("connectionString"));
 
 builder.Services.AddControllers()
     .AddApplicationPart(typeof(CleanArchitecture.Presentation.AssemblyReference).Assembly);
